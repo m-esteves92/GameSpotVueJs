@@ -1,0 +1,15 @@
+Gamespot project installations
+
+npm install @meforma/vue-toaster
+
+npm install vue3-carousel
+
+npm i --save ant-design-vue@next  (framework)
+
+npm install vuex@next --save
+
+npm install --save firebase
+
+npm i vee-validate --save
+
+npm install -S yup
