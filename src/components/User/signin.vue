@@ -6,7 +6,7 @@
             <h1 v-text="!type ? 'Sign in':'Sign up'"></h1>
 
             <div class="form-group">
-                <Field name="email" v-slot="{field, errors, errorMessage }">
+                <Field name="email" :value="'francis@gmail.com'"  v-slot="{field, errors, errorMessage }">
                     <input
                         type="text"
                         id="email"
@@ -26,7 +26,7 @@
 
 
              <div class="form-group">
-                <Field name="password" v-slot="{field, errors, errorMessage }">
+                <Field name="password" :value="'password123'" v-slot="{field, errors, errorMessage }">
                     <input
                         type="password"
                         id="password"
@@ -69,20 +69,18 @@
 </template>
 
 <script>
-
-import { Field,Form } from 'vee-validate';
+import { Field,Form  } from 'vee-validate'
 import * as yup from 'yup';
-
 export default {
     components:{
         Field,
-        Form,
+        Form
     },
     data(){
-        return{
+        return {
             type:false,
             formSchema:{
-                email:yup.string()
+                email: yup.string()
                     .required('The email is required')
                     .email('Not a valid email'),
                 password:yup.string()
@@ -97,11 +95,10 @@ export default {
                 console.log(values,'SIGN IN')
             } else {
                 //sign up
-                console.log(values,'SIGN UP')
+                this.$store.dispatch('auth/signup',values);
             }
             resetForm();
         }
     }
 }
-
 </script>
