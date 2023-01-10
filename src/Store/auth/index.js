@@ -1,5 +1,6 @@
 /* eslint-disable */
-import { msgError, msgSuccess } from '../../Tools/vuex'
+import { msgError, msgSuccess } from '../../Tools/vuex';
+import fbErrors from '../../Tools/fbcodes';
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword
@@ -51,6 +52,7 @@ const authModule = {
         },
         async signin({commit,dispatch},payload){
             try {
+                commit('notify/setLoading',true,{ root: true })
                 const userCredential = await signInWithEmailAndPassword(
                     auth,
                     payload.email,
@@ -59,16 +61,19 @@ const authModule = {
                 
                 const userData = await dispatch('getUserProfile',userCredential.user.uid);
                 commit('setUser',userData);
-                router.push('/user/dashboard');
 
-                
+                msgSuccess(commit,'Welcome !!')
+                router.push('/user/dashboard');                
             } catch(error){
-                console.log(error);
-                msgError(commit);
+                msgError(commit,fbErrors(error.code));
+            } finally{
+                commit('notify/setLoading',false,{ root: true })
             }
+            
         },
         async signup({commit},payload){
             try{
+                commit('notify/setLoading',true,{ root: true })
                 const userCredential = await createUserWithEmailAndPassword(
                     auth,
                     payload.email,
@@ -86,7 +91,9 @@ const authModule = {
                 msgSuccess(commit,'Welcome !!')
                 router.push('/user/dashboard');    
             }catch(error){
-                msgError(commit);
+                msgError(commit,fbErrors(error.code));
+            } finally{
+                commit('notify/setLoading',false,{ root: true })
             }
         }
     }
