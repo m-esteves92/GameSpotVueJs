@@ -92,7 +92,7 @@ export default {
         onSubmit(values,{ resetForm }){
             if(!this.type){
                 // sign in
-                console.log(values,'SIGN IN')
+                this.$store.dispatch('auth/signin',values);
             } else {
                 //sign up
                 this.$store.dispatch('auth/signup',values);
