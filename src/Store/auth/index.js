@@ -1,4 +1,4 @@
-/* eslint-disable */
+/*eslint-disable */
 import { msgError, msgSuccess } from '../../Tools/vuex';
 import fbErrors from '../../Tools/fbcodes';
 import {
@@ -27,6 +27,16 @@ const authModule = {
             auth:false
         }   
     },
+    getters:{
+        isAuth(state){
+            if(state.auth) { return true};
+            return false 
+        },
+        isAdmin(state){
+            if(state.user.isAdmin) { return true};
+            return false 
+        }
+    },
     mutations:{
         setUser(state,payload){
             state.user = {
@@ -34,9 +44,23 @@ const authModule = {
                 ...payload
             }
             state.auth = true;
+        },
+        clearUser(state){
+            state.user = DEFAULT_USER;
+            state.auth = false;
         }
     },
     actions:{
+        async signOut({commit}){
+            try{
+                await auth.signOut();
+                commit('clearUser');
+                msgSuccess(commit,'Bye :(');
+                router.push('/');
+            } catch(error){
+                msgError(commit);
+            }
+        },
         async autosign({commit,dispatch},payload){
             try {
                 const userData = await dispatch('getUserProfile',payload.uid);
