@@ -69,8 +69,10 @@
 </template>
 
 <script>
+
 import { Field,Form  } from 'vee-validate'
 import * as yup from 'yup';
+
 export default {
     components:{
         Field,
