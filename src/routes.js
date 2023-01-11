@@ -7,14 +7,26 @@ import Home from './components/Home';
 import Article from './components/Articles/article.vue';
 import Signin from './components/User/signin.vue';
 import store from './Store';
+import Dashboard from './components/User/Dashboard';
 
+import UserMain from './components/User/Dashboard/main.vue';
+import UserProfile from './components/User/Dashboard/Pages/user_profile.vue';
+import AdminArticles from './components/User/Dashboard/Admin/articles.vue';
+import AdminAddArticles from './components/User/Dashboard/Admin/add.vue';
 
+UserProfile
 const routes = createRouter({
     history: createWebHistory(),
     routes:[
         { path:'/', component: Home, name:'home'},
         { path:'/article/:id', component:Article, name:'article' },
-        { path:'/signin', component:Signin, name:'signin' }
+        { path:'/signin', component:Signin, name:'signin' },
+        { path:'/user/dashboard', component:Dashboard, children:[
+            { path:'', component: UserMain,name:'dashboard'},
+            { path:'profile', component: UserProfile ,name:'user_profile'},
+            { path:'articles', component: AdminArticles ,name:'admin_articles'},
+            { path:'articles/add', component: AdminAddArticles ,name:'admin_add'},
+        ]}
     ]
 });
 
