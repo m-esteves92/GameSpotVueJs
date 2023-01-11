@@ -20,8 +20,8 @@ const routes = createRouter({
     routes:[
         { path:'/', component: Home, name:'home'},
         { path:'/article/:id', component:Article, name:'article' },
-        { path:'/signin', component:Signin, name:'signin' },
-        { path:'/user/dashboard', component:Dashboard, children:[
+        { path:'/signin', component:Signin, name:'signin',meta:{ signin: true }},
+        { path:'/user/dashboard', component:Dashboard,meta:{ auth: true }, children:[
             { path:'', component: UserMain,name:'dashboard'},
             { path:'profile', component: UserProfile ,name:'user_profile'},
             { path:'articles', component: AdminArticles ,name:'admin_articles'},
@@ -32,8 +32,13 @@ const routes = createRouter({
 
 const auth = getAuth();
 const validateCheck = (to,from,next) => {
-    next();
-
+    if( to.meta.auth && !store.getters['auth/isAuth']){
+        next('/signin');
+    } else if( to.meta.signin && store.getters['auth/isAuth']){
+        next('/user/dashboard');
+    } else{
+        next();
+    }
     store.commit('notify/setLoading',false);
 }   
 

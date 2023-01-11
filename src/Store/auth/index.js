@@ -1,4 +1,4 @@
-/*eslint-disable */
+/* eslint-disable */
 import { msgError, msgSuccess } from '../../Tools/vuex';
 import fbErrors from '../../Tools/fbcodes';
 import {
