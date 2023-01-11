@@ -1,8 +1,10 @@
+
+
 const notificationsModule = {
     namespaced:true,
     state(){
         return {
-            loader:false,
+            loader:true,
             toastMsg:[false,'','error'] // true.false - message - type
         }
     },
