@@ -1,6 +1,9 @@
 /* eslint-disable */
 import { msgSuccess, msgError } from '../../Tools/vuex';
-import { doc, setDoc, collection,serverTimestamp } from 'firebase/firestore';
+import { 
+    doc, setDoc, getDocs, collection,
+    serverTimestamp, limit,
+    orderBy, startAfter, query} from 'firebase/firestore';
 import { db } from '../../firebase';
 import router from '../../routes';
 
@@ -12,7 +15,24 @@ const articlesModule = {
     namespaced: true,
     state(){
         return {
-
+            adminArticles:'',
+            adminLastVisible:''
+        }
+    },
+    getters:{
+        getAdminArticles(state){
+            return state.adminArticles;
+        },
+        getLastVisible(state){
+            return state.adminLastVisible;
+        }
+    },
+    mutations:{
+        setAdminArticles(state,articles){
+            state.adminArticles = articles;
+        },
+        setAdminLastVisible(state,payload){
+            state.adminLastVisible = payload;
         }
     },
     actions:{
@@ -35,7 +55,24 @@ const articlesModule = {
                 msgError(commit);
                 console.log(error)
             }
-        }
+        },
+        async getAdminArticles({commit},payload){
+            try{
+                const q = query(articlesCol,orderBy('timestamp','desc'),limit(payload.limit));
+                const querySnapshot = await getDocs(q);
+
+                const lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
+                const articles = querySnapshot.docs.map( doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }))
+
+                commit('setAdminArticles',articles);
+                commit('setAdminLastVisible',lastVisible);
+            } catch(error){
+                console.log(error)
+            }
+        }   
     }
 }
 
