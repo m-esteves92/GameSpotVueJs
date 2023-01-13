@@ -57,7 +57,7 @@
       <br/>
       <button 
          class="btn btn-secondary"
-         @click="getMoreAdminArticles({limit:1})"
+         @click="getMoreAdminArticles({limit:3})"
       >
          Get more articles
       </button>
@@ -90,7 +90,7 @@ export default {
    mounted(){
       const reload = this.$route.params.reload;
       if(!this.adminArticles || reload){
-         this.getAdminArticles({limit:1})
+         this.getAdminArticles({limit:3})
       }
    },
    methods:{
