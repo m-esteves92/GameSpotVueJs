@@ -33,7 +33,6 @@
             </Field>
          </div>
 
-  
          <br/>
 
          <div class="form-group">
@@ -51,7 +50,18 @@
 
          <br/>
 
-         <wysiwyg/>
+         <wysiwyg @update="updateEditor"/>
+         <Field name="editor" v-model="veditor" v-slot="{ field, errors, errorMessage }">
+              <input
+                  type="hidden"
+                  id="veditor"
+                  v-bind="field"
+              />
+               <div class="alert alert-danger" v-if="errors.length !== 0">
+                     {{ errorMessage }}
+               </div>
+         </Field>
+
 
          <br/>
 
@@ -121,6 +131,7 @@ export default {
    },
    data(){
       return {
+         veditor:'',
          ratings:[1,2,3,4,5],
          formSchema:addArticleSchema
       }
@@ -128,6 +139,10 @@ export default {
    methods:{
       onSubmit(values){
          console.log(values);
+      },
+      updateEditor(value){
+         this.veditor = value;
+         console.log(value)
       }
    }
 }
