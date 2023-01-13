@@ -46,10 +46,25 @@
             </a-popconfirm>
          </template>
 
-
+         <template #title>
+            <router-link :to="{name:'admin_add'}">
+               <button class="btn btn-secondary">Add article</button>
+            </router-link>
+         </template>
+         <template #footer></template>
       </a-table>
 
+      <br/>
+      <button 
+         class="btn btn-secondary"
+         @click="getMoreAdminArticles({limit:1})"
+      >
+         Get more articles
+      </button>
+
+
    </div>
+   
 
 </template>
 
@@ -73,11 +88,15 @@ export default {
       }
    },
    mounted(){
-      this.getAdminArticles({limit:3})
+      const reload = this.$route.params.reload;
+      if(!this.adminArticles || reload){
+         this.getAdminArticles({limit:1})
+      }
    },
    methods:{
       ...mapActions('articles',[
-         'getAdminArticles'
+         'getAdminArticles',
+         'getMoreAdminArticles'
       ]),
       removeById(id){
          console.log(id)
