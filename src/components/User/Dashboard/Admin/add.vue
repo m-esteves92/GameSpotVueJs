@@ -51,6 +51,10 @@
 
          <br/>
 
+         <wysiwyg/>
+
+         <br/>
+
          <div class="form-group">
             <Field 
                name="rating" 
@@ -100,6 +104,7 @@
 
 <script>
 /* eslint-disable */
+import wysiwyg from '../../../Utils/wysiwyg.vue';
 import FormElement from '../../../Utils/form_elements.vue';
 import { addArticleSchema } from '@/Tools/schemas.js';
 import DashboardTitle from '../../../Utils/dashTitle.vue';
@@ -111,7 +116,8 @@ export default {
       DashboardTitle,
       Field,
       Form,
-      FormElement
+      FormElement,
+      wysiwyg
    },
    data(){
       return {
