@@ -1,9 +1,41 @@
+/* eslint-disable */
+import { msgSuccess, msgError } from '../../Tools/vuex';
+import { doc, setDoc, collection,serverTimestamp } from 'firebase/firestore';
+import { db } from '../../firebase';
+import router from '../../routes';
+
+
+let articlesCol = collection(db,'articles') 
+
+
 const articlesModule = {
+    namespaced: true,
     state(){
-        return{
+        return {
 
         }
-
+    },
+    actions:{
+        async addArticle({commit,rootGetters},payload){
+            try{
+                const user = rootGetters['auth/getUserData'];
+                const newArticle = doc(articlesCol);
+                await setDoc(newArticle,{
+                    timestamp:serverTimestamp(),
+                    owner:{
+                        uid: user.uid,
+                        firstname: user.firstname,
+                        lastname: user.lastname
+                    },
+                    ...payload
+                });
+                router.push({name:'admin_articles'})
+                msgSuccess(commit,'Congratulations')
+            } catch(error){
+                msgError(commit);
+                console.log(error)
+            }
+        }
     }
 }
 
