@@ -1,13 +1,14 @@
-import { createStore } from 'vuex';     // primeira coisa a fazer
+import { createStore } from 'vuex';
 import AuthModule from './auth';
 import NotificationsModule from './notifications';
-import ArticlesModule from './articles';
+import ArticlesModule from './articles'
 
 const store = createStore({
+    strict:true,
     modules:{
-        auth: AuthModule,
+        auth:AuthModule,
         notify: NotificationsModule,
-        articles: ArticlesModule
+        articles:ArticlesModule
     }
 });
 
