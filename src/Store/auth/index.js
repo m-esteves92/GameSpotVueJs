@@ -1,3 +1,4 @@
+
 /* eslint-disable */
 import { msgError, msgSuccess } from '../../Tools/vuex';
 import fbErrors from '../../Tools/fbcodes';
@@ -35,6 +36,9 @@ const authModule = {
         isAdmin(state){
             if(state.user.isAdmin) { return true};
             return false 
+        },
+        getUserData(state){
+            return state.user;
         }
     },
     mutations:{
