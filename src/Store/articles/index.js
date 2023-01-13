@@ -2,7 +2,7 @@
 import { msgSuccess, msgError } from '../../Tools/vuex';
 import { 
     doc, setDoc, getDocs, collection,
-    serverTimestamp, limit,
+    serverTimestamp, limit,deleteDoc,
     orderBy, startAfter, query} from 'firebase/firestore';
 import { db } from '../../firebase';
 import router from '../../routes';
@@ -101,7 +101,22 @@ const articlesModule = {
             } catch(error){
                 msgError(commit,error)
             }
-        }   
+        },
+        async removeById({commit,state},payload){
+            try{
+                await deleteDoc(doc(db,"articles",payload));
+
+                const newList = state.adminArticles.filter( x => {
+                    return x.id != payload
+                });
+
+                commit("setAdminArticles",newList);
+                msgSuccess(commit,'Articles deleted !!');
+
+            } catch(error){
+                msgError(commit,error)
+            }
+        }
     }
 }
 

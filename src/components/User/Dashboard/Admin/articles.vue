@@ -96,11 +96,9 @@ export default {
    methods:{
       ...mapActions('articles',[
          'getAdminArticles',
-         'getMoreAdminArticles'
-      ]),
-      removeById(id){
-         console.log(id)
-      }
+         'getMoreAdminArticles',
+         'removeById'
+      ])
    }
 }
 
