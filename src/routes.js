@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { getAuth, onAuthStateChanged} from 'firebase/auth';
 import { createRouter, createWebHistory, START_LOCATION } from 'vue-router';
 
@@ -8,13 +7,15 @@ import Article from './components/Articles/article.vue';
 import Signin from './components/User/signin.vue';
 import store from './Store';
 import Dashboard from './components/User/Dashboard';
+import NotFound from './components/404.vue'
 
 import UserMain from './components/User/Dashboard/main.vue';
 import UserProfile from './components/User/Dashboard/Pages/user_profile.vue';
 import AdminArticles from './components/User/Dashboard/Admin/articles.vue';
 import AdminAddArticles from './components/User/Dashboard/Admin/add.vue';
 
-UserProfile
+
+
 const routes = createRouter({
     history: createWebHistory(),
     routes:[
@@ -26,7 +27,8 @@ const routes = createRouter({
             { path:'profile', component: UserProfile ,name:'user_profile'},
             { path:'articles', component: AdminArticles ,name:'admin_articles'},
             { path:'articles/add', component: AdminAddArticles ,name:'admin_add'},
-        ]}
+        ]},
+        { path: '/:notFound(.*)*', component: NotFound,name:'404'}
     ]
 });
 
