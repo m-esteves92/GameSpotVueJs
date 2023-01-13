@@ -49,12 +49,41 @@ const articlesModule = {
                     },
                     ...payload
                 });
-                router.push({name:'admin_articles'})
+                router.push({name:'admin_articles',params:{ reload: true }})
                 msgSuccess(commit,'Congratulations')
             } catch(error){
                 msgError(commit);
                 console.log(error)
             }
+        },
+        async getMoreAdminArticles({commit,getters},payload){
+            try{
+                if(getters.getLastVisible){
+                    let oldArticles = getters.getAdminArticles;
+
+                    const q = query(
+                        articlesCol,
+                        orderBy('timestamp','desc'),
+                        startAfter(getters.getLastVisible),
+                        limit(payload.limit)
+                    );
+                    const querySnapshot = await getDocs(q);
+                    const lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
+                    const newArticles = querySnapshot.docs.map( doc => ({
+                        id: doc.id,
+                        ...doc.data()
+                    }));
+
+                    commit('setAdminArticles',[
+                        ...oldArticles,
+                        ...newArticles
+                    ]);
+                    commit('setAdminLastVisible',lastVisible);
+                }
+            } catch(error){
+                msgError(commit,'Opp,try again later')
+            }
+
         },
         async getAdminArticles({commit},payload){
             try{
@@ -70,7 +99,7 @@ const articlesModule = {
                 commit('setAdminArticles',articles);
                 commit('setAdminLastVisible',lastVisible);
             } catch(error){
-                console.log(error)
+                msgError(commit,error)
             }
         }   
     }
