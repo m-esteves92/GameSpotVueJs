@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <app-carousel :slides="homeArticles"/>
+        <app-carousel :slides="slidesArticles"/>
         <app-featured :articles="homeArticles"/>
     </div>
 </template>
@@ -14,22 +14,20 @@ export default {
         appCarousel,
         appFeatured
     },
-    data(){
-        return{
-            homeArticles:[
-                {id:1},
-                {id:2},
-                {id:3},
-                {id:4},
-                {id:5},
-                {id:6},
-                {id:7},
-                {id:8}
-                
-            ]
+    computed:{
+        homeArticles(){
+            return this.$store.getters['articles/getHomeArticles'];
+        },
+        slidesArticles(){
+            const articles = this.$store.getters['articles/getHomeArticles'];
+            const slicedArray = articles.slice(0,4);
+            return slicedArray;
         }
+    },
+    mounted(){
+        this.$store.dispatch('articles/getArticles',{limit:8});
     }
+
 }
 
 </script>
-

@@ -1,15 +1,13 @@
 <template>
     <a-col :span="span" class="article_card">
-        <router-link :to="{name:'article', params:{id:article.id}}">
+        <router-link :to="{name:'article',params:{id:article.id}}">
             <a-card hoverable style="width:100%">
                 <template #cover>
-                    <img alt="image-article" :src="`http://placebeard.it/1080/720?${article.id}`">
+                    <img alt="image_article" :src="article.img"> 
                 </template>
-                <h3>Lorem ipsum dolor sit amet</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex 
-                    ea commodo consequat.
+                <h3>{{ article.title }}</h3>
+                <p>
+                   {{ article.excerpt }}
                 </p>
             </a-card>
         </router-link>
@@ -17,7 +15,7 @@
 </template>
 
 <script>
-   export default{
-    props:['sapn','article','index']
-   } 
+export default {
+    props:['span','article','index']
+}
 </script>
