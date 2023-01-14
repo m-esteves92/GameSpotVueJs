@@ -42,6 +42,7 @@ import { Editor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 
 export default {
+    props:['content'],
    components:{
        EditorContent
    },
@@ -59,7 +60,14 @@ export default {
         onUpdate:()=>{
             this.$emit('update',this.editor.getHTML());
         }
-    })
+    });
+
+    if(this.content){
+        this.editor.commands.setContent(this.content);
+        this.$emit('update',this.editor.getHTML());
+    }
+
+
   },
 }
 </script>

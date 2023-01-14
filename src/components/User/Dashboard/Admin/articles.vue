@@ -46,6 +46,14 @@
             </a-popconfirm>
          </template>
 
+         <template #edit="{ record }">
+            <router-link :to="{name:'admin_edit',params:{id:record.id}}">
+               Edit posts
+            </router-link>
+         </template>
+
+
+
          <template #title>
             <router-link :to="{name:'admin_add'}">
                <button class="btn btn-secondary">Add article</button>
@@ -126,6 +134,10 @@ const columns = [
    {
       title:'',
       slots:{ customRender: 'delete'}
+   },
+    {
+      title:'',
+      slots:{ customRender: 'edit'}
    }
 ]
 
