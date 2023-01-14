@@ -64,7 +64,9 @@
 
 
    </div>
-   
+   <div v-else>
+      <Loader/>
+   </div>
 
 </template>
 
@@ -72,10 +74,12 @@
 <script>
 import DashboardTitle from '../../../Utils/dashTitle.vue';
 import { mapActions } from 'vuex'
+import Loader from '../../../Utils/loader.vue';
 
 export default {
    components:{
-      DashboardTitle
+      DashboardTitle,
+      Loader
    },
    data(){
       return {

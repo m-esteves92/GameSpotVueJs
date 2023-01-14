@@ -6,7 +6,7 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword
 } from 'firebase/auth';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
 import { db, auth } from '../../firebase';
 import router from '../../routes';
 
@@ -39,6 +39,9 @@ const authModule = {
         },
         getUserData(state){
             return state.user;
+        },
+        getUserId(state){
+            return state.user.uid
         }
     },
     mutations:{
@@ -55,6 +58,28 @@ const authModule = {
         }
     },
     actions:{
+        async updateProfile({commit,getters},payload){
+            try{
+                const userRef = doc(db,'users',getters.getUserId);
+                const userData = getters.getUserData;
+
+                if(
+                    payload.firstname === userData.firstname &&
+                    payload.lastname === userData.lastname
+                ){
+                    msgError(commit,'They are the same !!!')
+                    return false
+                }
+                await updateDoc(userRef,{
+                    ...payload
+                });
+
+                commit('setUser',payload);
+                msgSuccess(commit,'Updated');
+            } catch(error){
+                msgError(commit,error);
+            }
+        },
         async signOut({commit}){
             try{
                 await auth.signOut();

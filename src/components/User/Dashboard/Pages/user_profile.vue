@@ -80,7 +80,7 @@ export default {
    },
    methods:{
       onSubmit(values){
-         console.log(values)
+         this.$store.dispatch('auth/updateProfile',values);
       }
    }
 }
