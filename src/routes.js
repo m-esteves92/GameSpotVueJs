@@ -12,8 +12,8 @@ import NotFound from './components/404.vue'
 import UserMain from './components/User/Dashboard/main.vue';
 import UserProfile from './components/User/Dashboard/Pages/user_profile.vue';
 import AdminArticles from './components/User/Dashboard/Admin/articles.vue';
-import AdminAddArticles from './components/User/Dashboard/Admin/add.vue';
-
+import AdminAddArticle from './components/User/Dashboard/Admin/add.vue';
+import AdminEditArticle from './components/User/Dashboard/Admin/edit.vue';
 
 
 const routes = createRouter({
@@ -26,7 +26,8 @@ const routes = createRouter({
             { path:'', component: UserMain,name:'dashboard'},
             { path:'profile', component: UserProfile ,name:'user_profile'},
             { path:'articles', component: AdminArticles ,name:'admin_articles'},
-            { path:'articles/add', component: AdminAddArticles ,name:'admin_add'},
+            { path:'articles/add', component: AdminAddArticle ,name:'admin_add'},
+            { path:'articles/edit/:id', component: AdminEditArticle ,name:'admin_edit'},
         ]},
         { path: '/:notFound(.*)*', component: NotFound,name:'404'}
     ]
